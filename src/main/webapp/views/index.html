@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link href="../res/css/main-tab.css" rel="stylesheet" type="text/css"/>
+    <script src="../res/js/main-tab.js" type="text/javascript"></script>
+    <script src="../libs/js/jquery-1.10.1.min.js"></script>
+    <script src="../js/app/config.js"></script>
+</head>
+<body class="body">
+<div class="content">
+    <div class="head-content">
+        <label>后台管理系统</label>
+        <div class="head-content-center">
+            <label id="total-inf"></label>
+        </div>
+        <div class="head-content-right">
+            <img src="../libs/image/avatar.png">
+            <label class="head-label-inf">-</label>
+            <div class="inf-box" id="inf-box-id">
+                <i class="inf-box-icon"></i>
+                <div class="inf-box-content">
+                    <ul>
+                        <li id="inf-box-edit" onclick="editUser()"><label>修改资料</label></li>
+                        <li id="inf-box-logout" onclick="logout()"><label>退出</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-content">
+        <div class="menu-all">
+            <div class="menu-main">
+                <div class="menu-title" tag="unselected">
+                    <li>用户管理</li>
+                </div>
+                <div class="menu-sub">
+                    <ul>
+                        <li sub_tag="unselected" content="../user/user_edit.html">管理员信息</li>
+                        <li sub_tag="unselected" content="../user/user_list.html">用户列表</li>
+                    </ul>
+                </div>
+                <hr/>
+            </div>
+            <div class="menu-main">
+                <div class="menu-title" tag="unselected">
+                    <li>DEMO</li>
+                </div>
+                <div class="menu-sub">
+                    <ul>
+                        <li sub_tag="unselected" content="./demo1.html">DEMO1</li>
+                        <li sub_tag="unselected" content="./demo2.html">DEMO2</li>
+                        <li sub_tag="unselected" content="./demo3.html">DEMO3</li>
+                    </ul>
+                </div>
+                <hr/>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <iframe class="content-frame" id="content-frame" src="../user/user_list.html" frameborder="no" scrolling="no" style="overflow-x:hidden; overflow-y:hidden; "></iframe>
+    </div>
+</div>
+<div class="footer">
+    <li>2017</li>
+</div>
+</body>
+<script>
+    $(document).ready(function () {
+        init();
+        getUserInf();
+        window.setInterval(timeTask, 1000);//定时3S刷新；
+        $(".head-content-right").click(function () {
+            var divs = document.getElementById('inf-box-id');
+            if (divs.style.visibility == "visible") {
+                divs.style.visibility = "hidden"
+            } else {
+                divs.style.visibility = "visible"
+            }
+        });
+    });
+
+    function timeTask() {
+        $.ajax({
+            url: CONST_HOST + "/web/wechat/isHasNews.do", type: 'GET', dataType: "json", success: function (result) {
+                $("#total-inf").html("<small>总用户：</small> <font color='#dc143c'>" + 0 + "</font></big> " +
+                        "<small>   今日用户：</small> <font color='#dc143c'>" + 0 + "</font></big>");
+            }
+        });
+        try {
+            var ifm = document.getElementById("content-frame");
+            ifm.contentWindow.onTimeTask();
+        } catch (e) {
+        }
+    }
+    function logout() {
+        $.ajax({
+            url: CONST_HOST + "/web/user/logout.do", type: 'GET', dataType: "json", success: function (result) {
+                location.reload();
+            }
+        });
+    }
+    function editUser() {
+        $(".content-frame").attr("src", "../user/user_edit.html");
+    }
+    function getUserInf() {
+        $.ajax({
+            url: CONST_HOST + "/web/user/getUserInf.do", type: 'GET', dataType: "json", success: function (result) {
+                document.getElementsByClassName('head-label-inf')[0].innerHTML = result.user.nickname;
+            }
+        });
+    }
+</script>
+</html>
