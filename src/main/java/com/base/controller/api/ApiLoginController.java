@@ -53,7 +53,8 @@ public class ApiLoginController extends BaseController {
             resp.setToken(mUserServiceImpl.updateToken(user.getId()));//更新token;
             return resp;
         } else {
-            return new LoginResp(401, "帐号或密码错误");
+            ;
+            return new LoginResp(401, "帐号或密码错误:"+mUserServiceImpl.getUserInf(username).getPasswordSalt()+" --"+password+"-- "+user.getPassword()+" "+user.getPasswordSalt());
         }
     }
 
