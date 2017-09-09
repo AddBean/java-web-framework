@@ -93,6 +93,21 @@
     .box-close :hover {
         opacity: 0.7;
     }
+    .button-edit {
+        background: #606061;
+        color: #FFFFFF;
+        line-height: 32px;
+        text-align: center;
+        width: 72px;
+        padding: 8px;
+        font-size: 12px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        cursor: hand;
+    }
 </style>
 <div class="content-body">
     <div class="content-header">
@@ -125,6 +140,7 @@
                         <td>描述</td>
                         <td>上报数量</td>
                         <td>时间</td>
+                        <td>操作</td>
                     </tr>
                     </thead>
                     <tbody class="table-body">
@@ -176,6 +192,7 @@
             tr.insertCell(tr.cells.length).innerHTML = getValue(data[i].des);
             tr.insertCell(tr.cells.length).innerHTML = getValue(data[i].count);
             tr.insertCell(tr.cells.length).innerHTML = getValue(getLocalTime(data[i].addTime));
+            tr.insertCell(tr.cells.length).innerHTML = "<div ><a class='button-edit' onclick='onOpClick(\""+data[i].name+"\")'>详情</a></div>";
         }
         try {
             window.parent.setiFrameHeight();
@@ -183,7 +200,9 @@
             console.info(e.message)
         }
     }
-
+    function onOpClick(name) {
+        window.location = CONST_HOST + "/views/event/event_record.html?name="+name;
+    }
 
     function getLocalTime(nS) {
         return new Date(parseInt(nS)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");

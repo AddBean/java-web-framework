@@ -89,7 +89,21 @@
         background: #ff0000;
         cursor: pointer;
     }
-
+    .button-edit {
+        background: #606061;
+        color: #FFFFFF;
+        line-height: 32px;
+        text-align: center;
+        width: 72px;
+        padding: 8px;
+        font-size: 12px;
+        text-decoration: none;
+        font-weight: bold;
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        cursor: hand;
+    }
     .box-close :hover {
         opacity: 0.7;
     }
@@ -114,6 +128,7 @@
     <div class="content-main">
         <div class="box-body">
             <div class="box-header">
+                <a id="box-title" class="box-title">全部上报</a>
             </div>
             <div class="box-content">
                 <table class="table-content">
@@ -153,7 +168,7 @@
         initTable();
         getData(1);
         initPagination(startIndex, startIndex + pageSize, function (index) {
-            var page = parseInt(index)+1;
+            var page = parseInt(index) + 1;
             getData(page);
         });
         setPaginationIndex(0);
@@ -163,8 +178,14 @@
     });
 
     function getData(index) {
+        var url = CONST_HOST + "/web/event/getEvenRecordList.do?page=" + index + "&pagesize=20";
+        var name = getQueryString("name");
+        if (name != null) {
+            url = url + "&name=" + name;
+            $("#box-title").html(name);
+        }
         $.ajax({
-            url: CONST_HOST + "/web/event/getEvenRecordList.do?page=" + index + "&pagesize=20", type: 'GET', dataType: "json", success: function (result) {
+            url: url, type: 'GET', dataType: "json", success: function (result) {
                 initData(result);
             }
         });
@@ -191,7 +212,12 @@
             console.info(e.message)
         }
     }
-
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+    }
     function getLocalTime(nS) {
         return new Date(parseInt(nS)).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
     }
