@@ -10,10 +10,10 @@
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <!--<property name="url" value="jdbc:mysql://localhost:3306/base_db?useUnicode=true&amp;characterEncoding=utf-8"/>-->
-        <!--<property name="username" value="root"/>-->
-        <property name="url" value="jdbc:mysql://47.94.203.164:3306/base_db?useUnicode=true&amp;characterEncoding=utf-8"/>
-        <property name="username" value="admin"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/base_db?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="username" value="root"/>
+        <!--<property name="url" value="jdbc:mysql://47.94.203.164:3306/base_db?useUnicode=true&amp;characterEncoding=utf-8"/>-->
+        <!--<property name="username" value="admin"/>-->
         <property name="password" value="Aly39854051"/>
         <property name="testOnBorrow" value="false"/>
         <property name="testWhileIdle" value="true"/>
