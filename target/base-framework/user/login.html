@@ -1,0 +1,168 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="../libs/css/font-awesome.min.css">
+    <link href="../libs/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="../libs/image/favicon.ico"/>
+    <script src="../libs/js/jquery-3.1.0.min.js"></script>
+    <script src="../js/app/config.js"></script>
+    <style>
+        .login-title {
+            position: relative;
+            text-align: center;
+            padding-top: 10px;
+            display: block;
+            color: #ffffff;
+        }
+
+        .login-footer {
+            position: relative;
+            text-align: center;
+            line-height: 40px;
+            size: 10px;
+            display: block;
+            color: #f3f3f3;
+        }
+
+        .login-body {
+            background: #444;
+            width: 100%;
+            height: 100%;
+        }
+
+        .login-main {
+            width: 400px;
+            height: 600px;
+            margin-top: 100px;
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+        }
+
+        .login-frame {
+            width: 340px;
+            height: 340px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            padding: 20px;
+            background: #ffffff;
+        }
+
+        .login-input {
+            width: 100%;
+            height: 36px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+            padding-left: 10px;
+        }
+
+        .login-verfiy {
+            margin-top: 20px;
+            height: 40px;
+        }
+
+        .login-verfiy img {
+            width: 100px;
+            height: 36px;
+            margin-left: 20px;
+            float: left;
+            display: inline;
+        }
+
+        .login-verfiy input {
+            width: 100px;
+            height: 36px;
+            float: left;
+            margin: 0px;
+            padding-left: 10px;
+        }
+
+        #submit-button {
+            width: 100%;
+            height: 40px;
+            display: inline;
+            margin-left: auto;
+            margin-right: auto;
+            background: #0b94ea;
+            color: #ffffff;
+            border: none 0px;
+            margin-top: 20px;
+            float: left;
+        }
+
+        #error-label {
+            color: #ff0000;
+            width: 100%;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+            float: left;
+        }
+
+    </style>
+</head>
+<body class="login-body">
+<div class="login-main">
+    <h1 class="login-title">后台管理</h1>
+    <div class="login-frame">
+        <h3>登陆到后台管理系统</h3>
+        <form id="login-form" action="/web/user/login.do">
+            <input class="login-input" type="text" placeholder="用户名" id="username" name="username"/>
+            <input class="login-input" type="password" placeholder="密码" id="password" name="password"/>
+            <div class="login-verfiy">
+                <input type="text" placeholder="验证码" name="verifycode" id="verifycode"/>
+                <img id="codeimg" src="../web/user/getverify.do">
+            </div>
+            <label id="error-label"></label>
+            <input id="submit-button" type="button" value="登陆"/>
+        </form>
+    </div>
+    <label class="login-footer">
+        <small>2016 @ 后台管理系统</small>
+    </label>
+</div>
+</body>
+<script type="application/javascript">
+    $(document).ready(function () {
+        $("#submit-button").click(function () {
+            if (!checkInput())return
+            var url = CONST_HOST + '/web/user/login.do';
+            $.get(url,
+                    {username: $('#username').val(), password: $('#password').val(), verifycode: $('#verifycode').val()},
+                    function (data) {
+                        var js = JSON.parse(data);
+                        if (js.code == "200") {
+                            window.location = CONST_HOST + "/views/index.html";
+                        } else {
+                            alert(js.msg);
+                        }
+                    }, "text");
+        });
+        $("#codeimg").click(function () {
+            var dateNow = new Date().getMilliseconds();
+            $("#codeimg").attr("src", CONST_HOST + "/web/user/getverify.do?time=" + dateNow);
+        });
+    });
+
+    function checkInput() {
+        if ($("#username").val() == "") {
+            document.getElementById("error-label").innerHTML = "用户名不能为空！";
+            return false;
+        }
+
+        if ($("#password").val() == "") {
+            document.getElementById("error-label").innerHTML = "密码不能为空！";
+            return false;
+        }
+
+        if ($("#verifycode").val() == "") {
+            document.getElementById("error-label").innerHTML = "验证码不能为空！";
+            return false;
+        }
+        document.getElementById("error-label").innerHTML = "";
+        return true;
+    }
+</script>
+</html>
