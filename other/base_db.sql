@@ -10,10 +10,52 @@ Target Server Type    : MYSQL
 Target Server Version : 50636
 File Encoding         : 65001
 
-Date: 2017-09-08 15:10:50
+Date: 2017-09-11 17:11:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for e_event
+-- ----------------------------
+DROP TABLE IF EXISTS `e_event`;
+CREATE TABLE `e_event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `des` varchar(255) DEFAULT NULL,
+  `add_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `count` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_event
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for e_record
+-- ----------------------------
+DROP TABLE IF EXISTS `e_record`;
+CREATE TABLE `e_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `detail` varchar(1000) DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
+  `uuid` varchar(255) DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `sys_ver` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `add_time` datetime DEFAULT NULL,
+  `ex` varchar(255) DEFAULT NULL,
+  `ex1` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of e_record
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for u_role
@@ -51,12 +93,12 @@ CREATE TABLE `u_user` (
   `update_time` datetime DEFAULT NULL,
   `nickname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of u_user
 -- ----------------------------
-INSERT INTO `u_user` VALUES ('1', '38c9cec2e3616cbb8f69dcd5d0339e45', '1', 'admin', 'uxq2jzqs77RoWT26m6Nraw==', '7919faf4f90a2a89e8aab878993c2a3d', '1', '2017-09-07 15:58:01', '2017-09-08 14:40:44', 'test');
+INSERT INTO `u_user` VALUES ('1', 'ea521a70c007c80d5ae24c95c6b410dd', '1', 'admin', 'uxq2jzqs77RoWT26m6Nraw==', '7919faf4f90a2a89e8aab878993c2a3d', '1', '2017-09-07 15:58:01', '2017-09-09 01:21:41', 'AddBean');
 
 -- ----------------------------
 -- Table structure for u_user_detail
@@ -72,9 +114,13 @@ CREATE TABLE `u_user_detail` (
   `ext` varchar(255) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of u_user_detail
 -- ----------------------------
-INSERT INTO `u_user_detail` VALUES ('4', '1', '24', '', '1', '', '', '');
+INSERT INTO `u_user_detail` VALUES ('4', '1', '24', '18788480955', '0', '上海市', '', '');
+INSERT INTO `u_user_detail` VALUES ('5', '2', null, null, '0', null, null, null);
+INSERT INTO `u_user_detail` VALUES ('6', '3', null, null, null, null, null, null);
+INSERT INTO `u_user_detail` VALUES ('7', '4', null, null, null, null, null, null);
+INSERT INTO `u_user_detail` VALUES ('8', '5', null, null, null, null, null, null);
